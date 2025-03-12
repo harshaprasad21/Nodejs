@@ -4,8 +4,8 @@
   "description": "A simple HTTP server with Node.js and Express",
   "main": "server.js",
   "scripts": {
-    "build": "mkdir -p dist && cp server.js package.json dist/",
-    "start": "node server.js",
+    "build": "mkdir -p dist && cp node.js package.json dist/",
+    "start": "node node.js",
     "test": "jest"
   },
   "keywords": [
