@@ -31,7 +31,12 @@ jobs:
       run: |
         cd app
         npm test  # Ensure you have Jest tests configured
+    - name: Find package.json path
+      id: find_package
+      run: echo "PACKAGE_PATH=$(find ${{ github.workspace }} -type f -name 'package.json' | head -n 1)" >> $GITHUB_ENV
 
+    - name: Debug package.json path
+      run: echo "Found package.json at $PACKAGE_PATH"
     # Step 5: Build the application
     - name: Build the application
       run: |
