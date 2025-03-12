@@ -45,6 +45,16 @@ jobs:
         cd /home/runner/work/Nodjs/Nodjs/app
         npm run build  # Ensure this step exists in package.json
 
+    - name: Check for dist folder
+      run: |
+        echo "Checking for dist folder..."
+        find . -type d -name "dist"
+        if [ -d "dist" ]; then
+        echo "dist folder found"
+        else
+        echo "dist folder not found"
+        fi
+
     # Step 6: Verify build output
     - name: Verify build output
       run: |
