@@ -35,7 +35,9 @@ jobs:
 
     # Step 5: Run tests (unit tests, integration tests, etc.)
     - name: Run tests
-      run: npm test  # Make sure you have tests configured in your package.json
+      run: |
+         cd app
+         npm test  # Make sure you have tests configured in your package.json
 
     # Step 6: Setup SSH for secure deployment to EC2
     - name: Setup SSH
