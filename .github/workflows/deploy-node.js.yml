@@ -20,10 +20,15 @@ jobs:
       with:
         node-version: '18.20.6'  # Set your desired Node.js version
 
-    # Step 3: Install dependencies (NPM)
     - name: Install dependencies
       run: |
+        echo "Current directory before moving to app/"
+        pwd
         cd app
+        echo "Current directory inside app/"
+        pwd
+        echo "Listing files in app/"
+        ls -l
         npm install
       
 
