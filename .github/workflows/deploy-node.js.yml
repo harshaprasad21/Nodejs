@@ -1,0 +1,56 @@
+name: Node.js CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    # Step 1: Checkout the latest code
+    - name: Checkout the code
+      uses: actions/checkout@v2
+
+    # Step 2: Setup Node.js environment (if needed)
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18.20.6'  # Set your desired Node.js version
+
+    # Step 3: Install dependencies (NPM)
+    - name: Install dependencies
+      run: npm install
+
+    # Step 4: Build the application (if applicable)
+    - name: Build the application
+      run: npm run build  # Customize if your app has a build step
+
+    # Step 5: Run tests (unit tests, integration tests, etc.)
+    - name: Run tests
+      run: npm test  # Make sure you have tests configured in your package.json
+
+    # Step 6: Setup SSH for secure deployment to EC2
+    - name: Setup SSH
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+
+    # Step 7: Copy files to EC2
+    - name: Copy files to EC2
+      run: |
+        scp -i ~/.ssh/id_rsa -r ./dist/* ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/nodejs
+    # Step 8: start the pm2 
+    - name: Start the app using PM2 
+      run: |
+        ssh -i ~/.ssh/id_rsa ubuntu@${{ secrets.EC2_HOST }} "cd /home/ubuntu/nodejs && pm2 start server.js --name 'node'"
+
+
+    # Step 8: Restart the app using PM2 on the EC2 instance
+    - name: Restart the app using PM2
+      run: |
+        ssh -i ~/.ssh/id_rsa ubuntu@${{ secrets.EC2_HOST }} "pm2 restart node"
