@@ -50,7 +50,7 @@ jobs:
     # Step 7: Copy files to EC2
     - name: Copy files to EC2
       run: |
-        scp -i ~/.ssh/id_rsa -r ./dist/* ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/nodejs
+        scp -i ~/.ssh/id_rsa -r ./app/dist/* ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/nodejs
     # Step 8: start the pm2 
     - name: Start the app using PM2 
       run: |
