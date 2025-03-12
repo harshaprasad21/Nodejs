@@ -35,7 +35,7 @@ jobs:
     # Step 4: Build the application (if applicable)
     - name: Build the application
       run: |
-         cd dist
+         cd app
          npm run build  # Customize if your app has a build step
 
     # Step 5: Run tests (unit tests, integration tests, etc.)
