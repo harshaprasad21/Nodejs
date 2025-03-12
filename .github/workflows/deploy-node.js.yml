@@ -22,7 +22,10 @@ jobs:
 
     # Step 3: Install dependencies (NPM)
     - name: Install dependencies
-      run: npm install
+      run: |
+        ls -la   # Check the directory contents, it should show your package.json
+        npm install
+      
 
     # Step 4: Build the application (if applicable)
     - name: Build the application
