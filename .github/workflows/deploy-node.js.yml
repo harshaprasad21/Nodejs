@@ -23,11 +23,13 @@ jobs:
     # Step 3: Install dependencies
     - name: Install dependencies
       run: |
+        cd app
         npm install
 
     # Step 4: Run Tests
     - name: Run tests
       run: |
+        cd app
         npm test  # Ensure you have Jest tests configured
 
     # Step 5: Build the application
