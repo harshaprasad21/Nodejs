@@ -4,7 +4,7 @@
   "description": "A simple HTTP server with Node.js and Express",
   "main": "server.js",
   "scripts": {
-    "build": "echo 'No build step required'",
+    "build": "mkdir -p dist && cp server.js package.json dist/",
     "start": "node server.js",
     "test": "jest"
   },
