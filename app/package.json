@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "build": "mkdir -p dist && cp /home/runner/work/Nodjs/Nodjs/app/server.js /home/runner/work/Nodjs/Nodjs/app/package.json dist/",
-    "start": "node app/server.js",
+    "start": "node dist/server.js",
     "test": "jest"
   },
   "keywords": [
