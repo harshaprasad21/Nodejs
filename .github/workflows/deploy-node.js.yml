@@ -14,37 +14,33 @@ jobs:
     - name: Checkout the code
       uses: actions/checkout@v2
 
-    # Step 2: Setup Node.js environment (if needed)
+    # Step 2: Set up Node.js environment
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '18.20.6'  # Set your desired Node.js version
+        node-version: '18'  # Adjust version as needed
 
+    # Step 3: Install dependencies
     - name: Install dependencies
       run: |
-        echo "Current directory before moving to app/"
-        pwd
-        cd app
-        echo "Current directory inside app/"
-        pwd
-        echo "Listing files in app/"
-        ls -l
         npm install
-      
 
-    # Step 4: Build the application (if applicable)
-    - name: Build the application
-      run: |
-         cd app
-         npm run build  # Customize if your app has a build step
-
-    # Step 5: Run tests (unit tests, integration tests, etc.)
+    # Step 4: Run Tests
     - name: Run tests
       run: |
-         cd app
-         npm test  # Make sure you have tests configured in your package.json
+        npm test  # Ensure you have Jest tests configured
 
-    # Step 6: Setup SSH for secure deployment to EC2
+    # Step 5: Build the application
+    - name: Build the application
+      run: |
+        npm run build  # Ensure this step exists in package.json
+
+    # Step 6: Verify build output
+    - name: Verify build output
+      run: |
+        ls -R dist
+
+    # Step 7: Setup SSH for deployment
     - name: Setup SSH
       run: |
         mkdir -p ~/.ssh
@@ -52,17 +48,13 @@ jobs:
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
 
-    # Step 7: Copy files to EC2
+    # Step 8: Copy files to EC2
     - name: Copy files to EC2
       run: |
-        scp -i ~/.ssh/id_rsa -r ./dist/* ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/nodejs
-    # Step 8: start the pm2 
-    - name: Start the app using PM2 
-      run: |
-        ssh -i ~/.ssh/id_rsa ubuntu@${{ secrets.EC2_HOST }} "cd /home/ubuntu/nodejs && pm2 start server.js --name 'node'"
+        scp -i ~/.ssh/id_rsa -r dist/* ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/nodejs
 
-
-    # Step 8: Restart the app using PM2 on the EC2 instance
-    - name: Restart the app using PM2
+    # Step 9: Start or Restart the app using PM2
+    - name: Start the app using PM2
       run: |
-        ssh -i ~/.ssh/id_rsa ubuntu@${{ secrets.EC2_HOST }} "pm2 restart node"
+        ssh -i ~/.ssh/id_rsa ubuntu@${{ secrets.EC2_HOST }} "cd /home/ubuntu/nodejs && pm2 start server.js --name 'node-app' || pm2 restart node-app"
+
