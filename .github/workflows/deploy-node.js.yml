@@ -23,6 +23,7 @@ jobs:
     # Step 3: Install dependencies (NPM)
     - name: Install dependencies
       run: |
+        cd /home/runner/work/Nodjs/Nodjs/package.json
         ls -la   # Check the directory contents, it should show your package.json
         npm install
       
