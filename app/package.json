@@ -1,16 +1,21 @@
 {
   "name": "node-http-server",
   "version": "1.0.0",
-  "description": "A simple HTTP server with Node.js",
+  "description": "A simple HTTP server with Node.js and Express",
   "main": "server.js",
   "scripts": {
+    "build": "echo 'No build step required'",
     "start": "node server.js"
   },
   "keywords": [
     "node",
     "http",
-    "server"
+    "server",
+    "express"
   ],
   "author": "Your Name",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
