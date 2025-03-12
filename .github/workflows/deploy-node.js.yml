@@ -40,6 +40,7 @@ jobs:
     # Step 5: Build the application
     - name: Build the application
       run: |
+        mkdir -p dist && cp server.js package.json dist/
         cd /home/runner/work/Nodjs/Nodjs/app
         npm run build  # Ensure this step exists in package.json
 
