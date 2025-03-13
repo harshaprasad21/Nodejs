@@ -4,7 +4,7 @@
   "description": "A simple HTTP server with Node.js and Express",
   "main": "server.js",
   "scripts": {
-    "build": "mkdir -p /home/runner/work/Nodejs/Nodejs/dist && cp /home/runner/work/Nodejs/Nodejs/app/package.json /home/runner/work/Nodejs/Nodejs/app/server.js /home/runner/work/Nodejs/Nodejs/app/dist",
+    "build": "mkdir -p /home/runner/work/Nodejs/Nodejs/dist && cp /home/runner/work/Nodejs/Nodejs/app/package.json /home/runner/work/Nodejs/Nodejs/app/server.js /home/runner/work/Nodejs/Nodejs/dist",
     "start": "node app/server.js",
     "test": "jest"
   },
